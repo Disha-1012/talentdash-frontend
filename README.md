@@ -10,7 +10,7 @@ TalentDash helps users explore software engineer compensation data, filter salar
 
 Live URL:
 
-(Add deployed URL here)
+(Deployed URL here soon)
 
 ---
 
@@ -18,7 +18,7 @@ Live URL:
 
 GitHub:
 
-(Add repository URL here)
+https://github.com/Disha-1012/talentdash-frontend
 
 ---
 
