@@ -197,6 +197,30 @@ npm run dev
 
 ---
 
+## Architecture Overview
+
+The project follows a component-based Next.js App Router architecture.
+
+- App routes handle page-level rendering.
+- Feature components handle reusable UI and interactions.
+- Mock data layer simulates salary records.
+- URL query parameters maintain filter state.
+- Server components handle data processing.
+- Client components handle interactive UI.
+
+
+---
+
+## Trade-off Decisions
+
+- Used mock salary data instead of an external API because the task focuses on frontend implementation and UI behavior.
+- Used URL query parameters for filters because it makes filtered pages shareable and preserves application state.
+- Used client components only where interactivity was required, keeping other pages server-rendered for better performance.
+- Calculated median compensation dynamically instead of storing derived values to keep the data consistent.
+
+
+---
+
 # Author
 
 Disha Dutta
