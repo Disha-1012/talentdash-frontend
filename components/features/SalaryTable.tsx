@@ -13,8 +13,6 @@ import {
 }
     from "@/lib/format";
 
-
-
 interface Props {
 
     data: SalaryRecord[];
