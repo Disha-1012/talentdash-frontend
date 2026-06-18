@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import JsonLd
+from "@/components/seo/JsonLd";
 
 import {
   Geist,
@@ -40,29 +42,70 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 
+  title: {
+    default:
+      "TalentDash | Software Engineer Salary Intelligence",
 
-  title:
-    "TalentDash | Software Engineer Salary Intelligence",
+    template:
+      "%s | TalentDash"
+  },
 
 
   description:
-    "Compare software engineer salaries by company, role, location and experience.",
+    "Explore software engineer salaries, company compensation insights, and compare tech salaries.",
 
 
   keywords: [
 
     "software engineer salary",
 
-    "salary comparison",
+    "developer compensation",
 
-    "tech compensation",
+    "tech salary comparison",
+
+    "salary dashboard",
 
     "TalentDash"
 
-  ]
+  ],
+
+
+  authors: [
+
+    {
+      name: "TalentDash"
+    }
+
+  ],
+
+
+  robots: {
+    index: true,
+    follow: true
+  },
+
+
+  openGraph: {
+
+
+    title:
+      "TalentDash | Software Engineer Salary Intelligence",
+
+
+    description:
+      "Compare software engineer salaries across companies.",
+
+
+    type: "website",
+
+
+    locale: "en_US"
+
+
+  }
+
 
 };
-
 
 
 
@@ -107,7 +150,7 @@ export default function RootLayout({
             "
 
       >
-
+        <JsonLd />
 
         <Navbar />
 

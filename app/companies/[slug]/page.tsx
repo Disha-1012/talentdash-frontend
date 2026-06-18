@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
     notFound
 } from "next/navigation";
@@ -41,6 +42,45 @@ export function generateStaticParams() {
         slug: company.slug
 
     }));
+
+
+}
+
+export async function generateMetadata(
+    {
+        params
+    }: Props
+): Promise<Metadata> {
+
+
+    const {
+        slug
+    }
+        =
+        await params;
+
+
+
+    const company =
+        companies.find(
+            c =>
+                c.slug === slug
+        );
+
+
+
+    return {
+
+
+        title:
+            `${company?.name} Salary Data | TalentDash`,
+
+
+        description:
+            `Explore ${company?.name} compensation insights, salary records and engineering pay trends.`
+
+
+    };
 
 
 }

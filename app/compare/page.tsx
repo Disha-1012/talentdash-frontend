@@ -1,14 +1,19 @@
+import type { Metadata } from "next";
 import CompareSalary
     from "@/components/features/CompareSalary";
 
 
-export const metadata = {
+export const metadata: Metadata = {
+
 
     title:
-        "Compare Software Engineer Salaries | TalentDash",
+        "Compare Tech Salaries | TalentDash",
+
+
 
     description:
-        "Compare salary compensation between companies"
+        "Compare software engineer compensation between technology companies."
+
 
 };
 

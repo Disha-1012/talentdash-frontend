@@ -1,9 +1,21 @@
+import type { Metadata } from "next";
 import SalaryPageClient
     from "@/components/features/SalaryPageClient";
 import FilterBar from "@/components/features/FilterBar";
 import { salaries } from "@/lib/mock-data";
 import SortSelect
     from "@/components/features/SortSelect";
+
+export const metadata: Metadata = {
+
+    title:
+        "Software Engineer Salaries | TalentDash",
+
+    description:
+        "Browse software engineer salary records by company, role, location and experience."
+
+};
+
 
 
 interface Props {
@@ -20,7 +32,6 @@ interface Props {
     }>
 
 }
-
 
 
 export default async function SalariesPage({
