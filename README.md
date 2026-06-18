@@ -10,7 +10,7 @@ TalentDash helps users explore software engineer compensation data, filter salar
 
 Live URL:
 
-(Deployed URL here soon)
+https://talentdash-frontend.vercel.app/
 
 ---
 
