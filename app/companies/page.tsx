@@ -25,29 +25,42 @@ export default function CompaniesPage() {
 
         <main
 
-            className="
-            min-h-screen
-            bg-[#F7F7F7]
-            p-8
-            "
+className="
+min-h-screen
+bg-slate-50
+py-10
+"
 
-        >
+>
+
+<div
+className="
+max-w-7xl
+mx-auto
+px-6
+"
+>
 
 
             <h1
-
                 className="
-                text-4xl
-                font-bold
-                mb-8
-                "
-
+text-5xl
+font-bold
+tracking-tight
+mb-3
+"
             >
 
                 Companies
 
 
             </h1>
+            <p className="
+text-gray-500
+text-lg
+">
+                Explore compensation trends and engineering salaries.
+            </p>
 
 
 
@@ -80,9 +93,10 @@ export default function CompaniesPage() {
                             bg-white
                             rounded-xl
                             p-6
-                            shadow
-                            hover:shadow-lg
-                            transition
+                            shadow-sm
+hover:shadow-xl
+transition-all
+duration-300
                             "
 
                         >
@@ -152,6 +166,8 @@ export default function CompaniesPage() {
             </div>
 
 
+
+        </div>
 
         </main>
 

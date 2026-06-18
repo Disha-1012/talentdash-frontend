@@ -318,45 +318,59 @@ export default async function CompanyPage({
         <main
 
             className="
-        min-h-screen
-        bg-[#F7F7F7]
-        p-8
-        "
+min-h-screen
+bg-slate-50
+py-10
+"
 
         >
 
-
-
-            {/* Company Header */}
-
-
-            <h1
-
-                className="
-            text-4xl
-            font-bold
-            mb-6
-            "
-
-            >
-
-                {company.name}
-
-
-            </h1>
-
             <div
                 className="
-mt-6
+max-w-7xl
+mx-auto
+px-6
 "
             >
 
 
-                <Link
 
-                    href={`/compare?s1=${firstRecordId}`}
+                {/* Company Header */}
 
+
+                <h1
                     className="
+text-5xl
+font-bold
+tracking-tight
+mb-3
+"
+                >
+
+                    {company.name}
+
+
+                </h1>
+
+                <p className="
+text-gray-500
+text-lg
+">
+                    Explore compensation trends and engineering salaries.
+                </p>
+
+                <div
+                    className="
+mt-6
+"
+                >
+
+
+                    <Link
+
+                        href={`/compare?s1=${firstRecordId}`}
+
+                        className="
     inline-block
     mt-6
     bg-blue-600
@@ -367,22 +381,22 @@ mt-6
     font-semibold
     "
 
-                >
+                    >
 
-                    Compare {company.name}
+                        Compare {company.name}
 
-                </Link>
-
-
-            </div>
+                    </Link>
 
 
+                </div>
 
 
 
-            <div
 
-                className="
+
+                <div
+
+                    className="
 bg-white
 rounded-xl
 p-6
@@ -391,20 +405,160 @@ md:grid-cols-6
 gap-5
 "
 
-            >
+                >
 
 
 
-                <div>
+                    <div>
 
-                    <p className="text-gray-500">
-                        Industry
-                    </p>
+                        <p className="text-gray-500">
+                            Industry
+                        </p>
 
 
-                    <b>
-                        {company.industry}
-                    </b>
+                        <b>
+                            {company.industry}
+                        </b>
+
+                    </div>
+
+
+
+
+
+                    <div>
+
+                        <p className="text-gray-500">
+                            Founded
+                        </p>
+
+
+                        <b>
+                            {company.founded}
+                        </b>
+
+
+                    </div>
+
+
+
+
+
+
+                    <div>
+
+                        <p className="text-gray-500">
+                            Employees
+                        </p>
+
+
+                        <b>
+                            {company.headcount}
+                        </b>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div>
+
+                        <p className="text-gray-500">
+                            HQ
+                        </p>
+
+
+                        <b>
+                            {company.hq}
+                        </b>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div>
+
+                        <p className="text-gray-500">
+                            Median Compensation
+                        </p>
+
+
+                        <b className="text-xl">
+
+                            ₹
+                            {
+                                formatCurrency(
+                                    medianComp,
+                                    "INR"
+                                )
+                            }
+
+                        </b>
+
+
+                    </div>
+
+                    <div>
+
+                        <p className="text-gray-500">
+                            TC Range
+                        </p>
+
+
+                        <b>
+
+                            ₹
+                            {
+                                formatCurrency(
+                                    range.min,
+                                    "INR"
+                                )
+                            }
+
+                            -
+
+                            ₹
+                            {
+                                formatCurrency(
+                                    range.max,
+                                    "INR"
+                                )
+                            }
+
+                        </b>
+
+
+                    </div>
+
+
+
+                    <div>
+
+                        <p className="text-gray-500">
+                            Records
+                        </p>
+
+
+                        <b>
+
+                            {records.length}
+
+                        </b>
+
+
+                    </div>
+
+
+
 
                 </div>
 
@@ -412,286 +566,146 @@ gap-5
 
 
 
-                <div>
 
-                    <p className="text-gray-500">
-                        Founded
-                    </p>
 
 
-                    <b>
-                        {company.founded}
-                    </b>
 
+                {/* Level Distribution */}
 
-                </div>
 
 
+                <section
 
-
-
-
-                <div>
-
-                    <p className="text-gray-500">
-                        Employees
-                    </p>
-
-
-                    <b>
-                        {company.headcount}
-                    </b>
-
-
-                </div>
-
-
-
-
-
-
-
-                <div>
-
-                    <p className="text-gray-500">
-                        HQ
-                    </p>
-
-
-                    <b>
-                        {company.hq}
-                    </b>
-
-
-                </div>
-
-
-
-
-
-
-
-                <div>
-
-                    <p className="text-gray-500">
-                        Median Compensation
-                    </p>
-
-
-                    <b className="text-xl">
-
-                        ₹
-                        {
-                            formatCurrency(
-                                medianComp,
-                                "INR"
-                            )
-                        }
-
-                    </b>
-
-
-                </div>
-
-                <div>
-
-                    <p className="text-gray-500">
-                        TC Range
-                    </p>
-
-
-                    <b>
-
-                        ₹
-                        {
-                            formatCurrency(
-                                range.min,
-                                "INR"
-                            )
-                        }
-
-                        -
-
-                        ₹
-                        {
-                            formatCurrency(
-                                range.max,
-                                "INR"
-                            )
-                        }
-
-                    </b>
-
-
-                </div>
-
-
-
-                <div>
-
-                    <p className="text-gray-500">
-                        Records
-                    </p>
-
-
-                    <b>
-
-                        {records.length}
-
-                    </b>
-
-
-                </div>
-
-
-
-
-            </div>
-
-
-
-
-
-
-
-
-
-            {/* Level Distribution */}
-
-
-
-            <section
-
-                className="
+                    className="
             bg-white
             mt-6
             p-6
             rounded-xl
             "
 
-            >
+                >
 
 
-                <h2
+                    <h2
 
-                    className="
+                        className="
                 text-xl
                 font-bold
                 mb-4
                 "
 
-                >
+                    >
 
-                    Level Distribution
+                        Level Distribution
 
-                </h2>
-
-
+                    </h2>
 
 
 
-                {
-                    LEVELS.map(level => (
 
 
-                        <div
-
-                            key={level}
-
-                            className="mb-4"
-
-                        >
-
-
-                            <div className="flex justify-between">
-
-
-                                <span>
-
-                                    {level}
-
-                                </span>
-
-
-
-                                <span>
-
-                                    {
-                                        distribution[level] || 0
-                                    }
-
-                                </span>
-
-
-
-                            </div>
-
-
-
+                    {
+                        LEVELS.map(level => (
 
 
                             <div
-                                className="
+
+                                key={level}
+
+                                className="mb-4"
+
+                            >
+
+
+                                <div className="flex justify-between">
+
+
+                                    <span>
+
+                                        {level}
+
+                                    </span>
+
+
+
+                                    <span>
+
+                                        {
+                                            distribution[level] || 0
+                                        }
+
+                                    </span>
+
+
+
+                                </div>
+
+
+
+
+
+                                <div
+                                    className="
 bg-gray-200
 h-3
 rounded
 "
 
-                            >
+                                >
 
 
-                                <div
+                                    <div
 
-                                    className="
+                                        className="
 bg-blue-600
 h-3
 rounded
 "
 
-                                    style={{
+                                        style={{
 
-                                        width:
+                                            width:
 
-                                            records.length > 0
+                                                records.length > 0
 
-                                                ?
+                                                    ?
 
-                                                `
+                                                    `
 
 ${(
-                                                    (distribution[level] || 0)
-                                                    / records.length
-                                                )
-                                                *
-                                                100
-                                                }%
+                                                        (distribution[level] || 0)
+                                                        / records.length
+                                                    )
+                                                    *
+                                                    100
+                                                    }%
 
 `
 
-                                                :
+                                                    :
 
-                                                "0%"
+                                                    "0%"
 
-                                    }}
+                                        }}
 
 
-                                />
+                                    />
+
+
+                                </div>
+
 
 
                             </div>
 
 
+                        ))
 
-                        </div>
-
-
-                    ))
-
-                }
+                    }
 
 
 
-            </section>
+                </section>
 
 
 
@@ -699,47 +713,49 @@ ${(
 
 
 
-            <section className="mt-6">
+                <section className="mt-6">
 
 
-                <h2 className="text-2xl font-bold mb-4">
+                    <h2 className="text-2xl font-bold mb-4">
 
-                    Salary Records
+                        Salary Records
 
-                </h2>
-
-
-
-                {
-
-                    records.length > 0
-
-                        ?
-
-                        <SalaryTable data={records} />
+                    </h2>
 
 
-                        :
 
-                        <div className="
+                    {
+
+                        records.length > 0
+
+                            ?
+
+                            <SalaryTable data={records} />
+
+
+                            :
+
+                            <div className="
 bg-white
 p-8
 rounded-xl
 ">
 
-                            No salary records found.
+                                No salary records found.
 
-                        </div>
+                            </div>
 
-                }
-
-
-            </section>
+                    }
 
 
+                </section>
 
 
 
+
+
+
+            </div>
 
         </main>
 

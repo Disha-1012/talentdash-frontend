@@ -12,10 +12,15 @@ interface Props {
 }
 
 
+
 export default function Pagination({
+
     page,
+
     total,
+
     setPage
+
 }: Props) {
 
 
@@ -26,55 +31,209 @@ export default function Pagination({
 
     return (
 
-        <div className="
+
+        <div
+
+            className="
+mt-8
+bg-white
+border
+border-slate-200
+rounded-2xl
+shadow-sm
+p-5
 flex
+flex-col
+md:flex-row
+items-center
 justify-between
-mt-5
+gap-4
+"
+
+        >
+
+
+
+            <button
+
+
+                disabled={page <= 1}
+
+
+                onClick={() =>
+                    setPage(page - 1)
+                }
+
+
+                className="
+px-5
+py-2.5
+rounded-xl
+border
+font-semibold
+text-sm
+transition
+
+hover:bg-slate-100
+
+disabled:opacity-40
+disabled:cursor-not-allowed
+
+"
+
+            >
+
+
+                ← Previous
+
+
+            </button>
+
+
+
+
+
+
+
+            <div
+
+                className="
+text-center
+"
+
+            >
+
+
+
+                <p
+
+                    className="
+text-sm
+font-semibold
+text-slate-700
+"
+
+                >
+
+                    Showing
+
+
+                    <span className="
+text-blue-600
+mx-1
 ">
 
+                        {(page - 1) * 25 + 1}
+
+                    </span>
+
+
+                    -
+
+
+                    <span className="
+text-blue-600
+mx-1
+">
+
+                        {Math.min(
+                            page * 25,
+                            total
+                        )}
+
+                    </span>
+
+
+                    of
+
+
+                    <span className="
+font-bold
+ml-1
+">
+
+                        {total}
+
+                    </span>
+
+
+                    records
+
+
+                </p>
+
+
+
+
+
+                <p
+
+                    className="
+text-xs
+text-slate-400
+mt-1
+"
+
+                >
+
+                    Page {page} of {pages}
+
+
+                </p>
+
+
+
+            </div>
+
+
+
+
+
+
 
             <button
 
-                disabled={page === 1}
 
-                onClick={() => setPage(page - 1)}
+                disabled={page >= pages}
 
-                className="border px-4 py-2 rounded"
+
+                onClick={() =>
+                    setPage(page + 1)
+                }
+
+
+                className="
+px-5
+py-2.5
+rounded-xl
+bg-blue-600
+text-white
+font-semibold
+text-sm
+transition
+
+hover:bg-blue-700
+
+disabled:opacity-40
+disabled:cursor-not-allowed
+
+"
 
             >
 
-                Previous
+
+                Next →
+
 
             </button>
 
 
-            <p>
 
-                Showing {(page - 1) * 25 + 1}
-                -
-                {Math.min(page * 25, total)}
-                of {total} records
-
-            </p>
-
-
-            <button
-
-                disabled={page === pages}
-
-                onClick={() => setPage(page + 1)}
-
-                className="border px-4 py-2 rounded"
-
-            >
-
-                Next
-
-            </button>
 
 
         </div>
 
-    )
+
+    );
 
 }

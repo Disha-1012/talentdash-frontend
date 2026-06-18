@@ -5,27 +5,26 @@ import {
     useRouter,
     useSearchParams
 }
-    from "next/navigation";
+from "next/navigation";
 
 
 import {
     useEffect,
     useState
 }
-    from "react";
+from "react";
 
 
 import {
     cleanedSalaries
 }
-    from "@/lib/mock-data";
+from "@/lib/mock-data";
 
 
 import {
     formatCurrency
 }
-    from "@/lib/format";
-
+from "@/lib/format";
 
 
 
@@ -34,11 +33,9 @@ import {
 export default function CompareSalary() {
 
 
-
     const router = useRouter();
 
     const params = useSearchParams();
-
 
 
 
@@ -56,9 +53,7 @@ export default function CompareSalary() {
 
 
 
-
     useEffect(() => {
-
 
         const currentS1 =
             params.get("s1");
@@ -68,11 +63,10 @@ export default function CompareSalary() {
             params.get("s2");
 
 
-
-        if (
+        if(
             currentS1 !== a ||
             currentS2 !== b
-        ) {
+        ){
 
             router.replace(
                 `/compare?s1=${a}&s2=${b}`
@@ -81,14 +75,12 @@ export default function CompareSalary() {
         }
 
 
-    }, [
+    },[
         a,
         b,
         router,
         params
     ]);
-
-
 
 
 
@@ -108,16 +100,12 @@ export default function CompareSalary() {
 
 
 
-
-
-
-
     function delta(
-        x: number,
-        y: number
-    ) {
+        x:number,
+        y:number
+    ){
 
-        return x - y;
+        return x-y;
 
     }
 
@@ -125,38 +113,32 @@ export default function CompareSalary() {
 
 
 
-
     function renderDelta(
-        value: number
-    ) {
-
+        value:number
+    ){
 
         return (
 
             <span
 
-                className={
-
-                    `
-                    font-semibold
-                    ${value >= 0
-                        ?
-                        "text-green-600"
-                        :
-                        "text-red-600"
-                    }
-                    `
+                className={`
+                font-semibold
+                ${
+                    value >= 0
+                    ?
+                    "text-green-600"
+                    :
+                    "text-red-600"
                 }
+                `}
 
             >
 
-
                 {
-                    value >= 0
-                        ?
-                        "+"
-                        :
-                        ""
+                    value >=0
+                    ? "+"
+                    :
+                    ""
                 }
 
 
@@ -166,7 +148,6 @@ export default function CompareSalary() {
                         "INR"
                     )
                 }
-
 
             </span>
 
@@ -178,88 +159,91 @@ export default function CompareSalary() {
 
 
 
-
     type ComparisonRow = {
-        label: string;
-        first: string | number;
-        second: string | number;
-        numeric: boolean;
+
+        label:string;
+        first:string|number;
+        second:string|number;
+        numeric:boolean;
+
     };
 
 
 
-    const rows: ComparisonRow[] = [
+
+    const rows:ComparisonRow[]=[
 
         {
-            label: "Company",
-            first: first.company,
-            second: second.company,
-            numeric: false
+            label:"Company",
+            first:first.company,
+            second:second.company,
+            numeric:false
         },
 
 
         {
-            label: "Role",
-            first: first.role,
-            second: second.role,
-            numeric: false
+            label:"Role",
+            first:first.role,
+            second:second.role,
+            numeric:false
         },
 
 
         {
-            label: "Level",
-            first: first.level,
-            second: second.level,
-            numeric: false
+            label:"Level",
+            first:first.level,
+            second:second.level,
+            numeric:false
         },
 
 
         {
-            label: "Location",
-            first: first.location,
-            second: second.location,
-            numeric: false
+            label:"Location",
+            first:first.location,
+            second:second.location,
+            numeric:false
         },
 
 
         {
-            label: "Experience",
-            first: `${first.experience_years} yrs`,
-            second: `${second.experience_years} yrs`,
-            numeric: false
+            label:"Experience",
+            first:`${first.experience_years} yrs`,
+            second:`${second.experience_years} yrs`,
+            numeric:false
         },
 
 
         {
-            label: "Base",
-            first: first.base_salary,
-            second: second.base_salary,
-            numeric: true
+            label:"Base Salary",
+            first:first.base_salary,
+            second:second.base_salary,
+            numeric:true
         },
 
 
         {
-            label: "Bonus",
-            first: first.bonus ?? 0,
-            second: second.bonus ?? 0,
-            numeric: true
+            label:"Bonus",
+            first:first.bonus ?? 0,
+            second:second.bonus ?? 0,
+            numeric:true
         },
 
 
         {
-            label: "Stock",
-            first: first.stock ?? 0,
-            second: second.stock ?? 0,
-            numeric: true
+            label:"Stock",
+            first:first.stock ?? 0,
+            second:second.stock ?? 0,
+            numeric:true
         },
 
 
         {
-            label: "Total Comp",
-            first: first.total_compensation,
-            second: second.total_compensation,
-            numeric: true
+            label:"Total Compensation",
+            first:first.total_compensation,
+            second:second.total_compensation,
+            numeric:true
         }
+
 
     ];
 
@@ -268,16 +252,15 @@ export default function CompareSalary() {
 
 
 
-
-
     return (
+
 
         <div
 
             className="
             bg-white
-            rounded-2xl
-            shadow-sm
+            rounded-3xl
+            shadow-md
             border
             border-gray-200
             p-6
@@ -298,169 +281,124 @@ export default function CompareSalary() {
                 className="
                 grid
                 md:grid-cols-2
-                gap-5
-                mb-8
+                gap-6
+                mb-10
                 "
 
             >
 
 
 
-                <div>
+
+                {[
+
+                    {
+                        title:"Company A",
+                        value:a,
+                        set:setA
+                    },
+
+                    {
+                        title:"Company B",
+                        value:b,
+                        set:setB
+                    }
+
+                ].map(item=>(
 
 
-                    <label
+                    <div
+
+                        key={item.title}
+
                         className="
-                        block
-                        text-sm
-                        font-semibold
-                        mb-2
+                        bg-gray-50
+                        rounded-2xl
+                        p-5
+                        border
                         "
+
                     >
 
-                        Compare Record A
 
-                    </label>
+                        <label
+
+                            className="
+                            block
+                            font-semibold
+                            mb-3
+                            text-gray-700
+                            "
+
+                        >
+
+                            {item.title}
+
+                        </label>
 
 
 
-                    <select
+                        <select
 
+                            value={item.value}
 
-                        value={a}
-
-
-                        onChange={
-                            e =>
-                                setA(
+                            onChange={
+                                e =>
+                                item.set(
                                     e.target.value
                                 )
-                        }
+                            }
 
 
-                        className="
-                        w-full
-                        border
-                        rounded-xl
-                        p-3
-                        focus:outline-none
-                        "
+                            className="
+                            w-full
+                            rounded-xl
+                            border
+                            px-4
+                            py-3
+                            bg-white
+                            outline-none
+                            focus:ring-2
+                            focus:ring-blue-500
+                            "
 
-                    >
-
-
-                        {
-                            cleanedSalaries.map(r => (
-
-
-                                <option
-
-                                    key={r.id}
-
-                                    value={r.id}
-
-                                >
-
-                                    {r.company} -
-                                    {r.role} -
-                                    {r.level}
+                        >
 
 
-                                </option>
+                            {
+                                cleanedSalaries.map(r=>(
 
 
-                            ))
-                        }
+                                    <option
+
+                                        key={r.id}
+
+                                        value={r.id}
+
+                                    >
+
+                                        {r.company}
+                                        {" - "}
+                                        {r.level}
+
+                                    </option>
 
 
-                    </select>
+                                ))
+                            }
 
 
-                </div>
-
-
-
+                        </select>
 
 
 
-
-                <div>
-
-
-                    <label
-                        className="
-                        block
-                        text-sm
-                        font-semibold
-                        mb-2
-                        "
-                    >
-
-                        Compare Record B
-
-                    </label>
+                    </div>
 
 
-
-                    <select
-
-
-                        value={b}
-
-
-                        onChange={
-                            e =>
-                                setB(
-                                    e.target.value
-                                )
-                        }
-
-
-                        className="
-                        w-full
-                        border
-                        rounded-xl
-                        p-3
-                        focus:outline-none
-                        "
-
-                    >
-
-
-                        {
-                            cleanedSalaries.map(r => (
-
-
-                                <option
-
-                                    key={r.id}
-
-                                    value={r.id}
-
-                                >
-
-                                    {r.company} -
-                                    {r.role} -
-                                    {r.level}
-
-
-                                </option>
-
-
-                            ))
-                        }
-
-
-                    </select>
-
-
-                </div>
-
+                ))}
 
 
             </div>
-
-
 
 
 
@@ -476,18 +414,19 @@ export default function CompareSalary() {
 
                 className="
                 overflow-x-auto
+                rounded-2xl
+                border
                 "
 
             >
 
 
-
                 <table
 
                     className="
-                w-full
-                text-left
-                "
+                    w-full
+                    text-left
+                    "
 
                 >
 
@@ -496,8 +435,8 @@ export default function CompareSalary() {
                     <thead
 
                         className="
-                bg-gray-50
-                "
+                        bg-gray-100
+                        "
 
                     >
 
@@ -505,23 +444,23 @@ export default function CompareSalary() {
                         <tr>
 
 
-                            <th className="p-4">
-                                Field
+                            <th className="p-5">
+                                Metric
                             </th>
 
 
-                            <th className="p-4">
-                                Record A
+                            <th className="p-5">
+                                Company A
                             </th>
 
 
-                            <th className="p-4">
-                                Record B
+                            <th className="p-5">
+                                Company B
                             </th>
 
 
-                            <th className="p-4">
-                                Delta
+                            <th className="p-5">
+                                Difference
                             </th>
 
 
@@ -537,104 +476,93 @@ export default function CompareSalary() {
                     <tbody>
 
 
-                        {
-                            rows.map(
-                                row => (
-
-                                    <tr
-
-                                        key={row.label}
-
-                                        className="
-            border-t
-            "
-
-                                    >
+                    {
+                        rows.map(row=>(
 
 
-                                        <td
-                                            className="
-                p-4
-                font-semibold
-                "
-                                        >
+                        <tr
 
-                                            {row.label}
+                            key={row.label}
 
-                                        </td>
+                            className="
+                            border-t
+                            hover:bg-gray-50
+                            "
 
-
-
-                                        <td className="p-4">
+                        >
 
 
-                                            {
-                                                row.numeric
-                                                    ?
-                                                    formatCurrency(
-                                                        Number(row.first),
-                                                        "INR"
-                                                    )
-                                                    :
-                                                    row.first
-                                            }
+                            <td className="
+                            p-5
+                            font-semibold
+                            "
+                            >
 
+                                {row.label}
 
-                                        </td>
+                            </td>
 
 
 
+                            <td className="p-5">
 
-                                        <td className="p-4">
+                                {
+                                    row.numeric
+                                    ?
+                                    formatCurrency(
+                                        Number(row.first),
+                                        "INR"
+                                    )
+                                    :
+                                    row.first
+                                }
+
+                            </td>
 
 
-                                            {
-                                                row.numeric
-                                                    ?
-                                                    formatCurrency(
-                                                        Number(row.second),
-                                                        "INR"
-                                                    )
-                                                    :
-                                                    row.second
-                                            }
 
+                            <td className="p-5">
 
-                                        </td>
+                                {
+                                    row.numeric
+                                    ?
+                                    formatCurrency(
+                                        Number(row.second),
+                                        "INR"
+                                    )
+                                    :
+                                    row.second
+                                }
+
+                            </td>
 
 
 
 
-                                        <td className="p-4">
+                            <td className="p-5">
 
+                                {
+                                    row.numeric
+                                    ?
+                                    renderDelta(
+                                        delta(
+                                            Number(row.first),
+                                            Number(row.second)
+                                        )
+                                    )
+                                    :
+                                    "—"
+                                }
 
-                                            {
-
-                                                row.numeric
-                                                    ?
-
-                                                    renderDelta(
-                                                        delta(
-                                                            Number(row.first),
-                                                            Number(row.second)
-                                                        )
-                                                    )
-
-                                                    :
-
-                                                    "—"
-
-                                            }
-                                        </td>
+                            </td>
 
 
 
-                                    </tr>
+                        </tr>
 
 
-                                ))
-                        }
-
+                        ))
+                    }
 
 
                     </tbody>
@@ -653,14 +581,14 @@ export default function CompareSalary() {
 
 
 
-
             {/* Winner */}
+
 
 
             <div
 
                 className="
-                mt-8
+                mt-10
                 flex
                 justify-center
                 "
@@ -668,60 +596,31 @@ export default function CompareSalary() {
             >
 
 
-                {
+                <div
 
-                    first.total_compensation >=
+                    className="
+                    bg-blue-600
+                    text-white
+                    px-6
+                    py-3
+                    rounded-full
+                    font-semibold
+                    shadow
+                    "
+
+                >
+
+                    {
+                        first.total_compensation >=
                         second.total_compensation
-
                         ?
-
-
-                        <div
-
-                            className="
-                    bg-[#0369A1]
-                    text-white
-                    px-5
-                    py-2
-                    rounded-full
-                    font-semibold
-                    "
-
-                        >
-
-                            {first.company}
-                            {" "}
-                            Higher TC
-
-
-                        </div>
-
-
+                        `${first.company} has higher TC`
                         :
+                        `${second.company} has higher TC`
+                    }
 
 
-                        <div
-
-                            className="
-                    bg-[#0369A1]
-                    text-white
-                    px-5
-                    py-2
-                    rounded-full
-                    font-semibold
-                    "
-
-                        >
-
-                            {second.company}
-                            {" "}
-                            Higher TC
-
-
-                        </div>
-
-
-                }
+                </div>
 
 
             </div>
@@ -732,7 +631,6 @@ export default function CompareSalary() {
         </div>
 
 
-    )
-
+    );
 
 }

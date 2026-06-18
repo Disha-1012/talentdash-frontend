@@ -55,65 +55,82 @@ export default function ComparePage() {
 
     return (
 
-        <main
-
+        <div
             className="
-min-h-screen
-bg-[#F7F7F7]
-p-8
+max-w-7xl
+mx-auto
+px-6
 "
-
         >
 
-
-
-            <h1
+            <main
 
                 className="
+min-h-screen
+bg-slate-50
+py-10
+"
+
+            >
+
+
+
+                <h1
+
+                    className="
 text-4xl
 font-bold
 mb-8
 "
 
-            >
+                >
 
-                Compare Companies
+                    Compare Salary Compensation
 
-            </h1>
+                </h1>
+
+                <p className="
+text-gray-500
+mb-8
+">
+                    Compare total compensation between technology companies
+                </p>
 
 
 
 
 
-            <Suspense
+                <Suspense
 
-                fallback={
+                    fallback={
 
-                    <div
+                        <div
 
-                        className="
+                            className="
 bg-white
 rounded-xl
 p-8
 "
 
-                    >
+                        >
 
-                        Loading comparison...
+                            Loading comparison...
 
-                    </div>
+                        </div>
 
-                }
+                    }
 
-            >
+                >
 
-                <CompareSalary />
+                    <CompareSalary />
 
-            </Suspense>
+                </Suspense>
 
 
 
-        </main>
+            </main>
+
+        </div>
 
     );
 

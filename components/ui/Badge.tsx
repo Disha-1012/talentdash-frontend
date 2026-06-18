@@ -8,36 +8,45 @@ interface BadgeProps {
 
 const levelColors: Record<Level, string> = {
 
+
     "L3":
-        "bg-slate-200 text-slate-800",
+        "bg-slate-100 text-slate-700 border border-slate-300",
+
 
     "SDE-I":
-        "bg-slate-200 text-slate-800",
+        "bg-slate-100 text-slate-700 border border-slate-300",
+
 
 
     "L4":
-        "bg-blue-200 text-blue-800",
+        "bg-blue-100 text-blue-700 border border-blue-300",
+
 
     "SDE-II":
-        "bg-blue-200 text-blue-800",
+        "bg-blue-100 text-blue-700 border border-blue-300",
+
 
 
     "L5":
-        "bg-indigo-200 text-indigo-800",
+        "bg-indigo-100 text-indigo-700 border border-indigo-300",
+
 
     "SDE-III":
-        "bg-indigo-200 text-indigo-800",
+        "bg-indigo-100 text-indigo-700 border border-indigo-300",
+
 
 
     "L6":
-        "bg-purple-200 text-purple-900",
+        "bg-purple-100 text-purple-700 border border-purple-300",
+
 
     "Staff":
-        "bg-purple-200 text-purple-900",
+        "bg-purple-100 text-purple-700 border border-purple-300",
+
 
 
     "Principal":
-        "bg-purple-900 text-white"
+        "bg-[#172554] text-white"
 
 };
 
@@ -51,7 +60,13 @@ export default function Badge({
 
         <span
             className={`
-px-3 py-1 rounded-full text-xs font-semibold
+px-3
+py-1
+rounded-full
+text-xs
+font-semibold
+inline-flex
+items-center
 ${levelColors[level]}
 `}
         >

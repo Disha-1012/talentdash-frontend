@@ -33,7 +33,8 @@ export default function SalaryTable({
             className="
 overflow-x-auto
 bg-white
-rounded-xl
+rounded-2xl
+shadow-sm
 border
 border-gray-200
 "
@@ -50,7 +51,8 @@ text-left
 
                 <thead
                     className="
-bg-gray-50
+bg-slate-100
+text-slate-700
 "
                 >
 
@@ -112,7 +114,8 @@ bg-gray-50
                                 key={item.id}
                                 className="
 border-t
-hover:bg-gray-50
+hover:bg-blue-50
+transition
 "
                             >
 
@@ -183,8 +186,7 @@ hover:bg-gray-50
 p-4
 font-bold
 text-xl
-text-[#0369A1]
-"
+text-blue-700"
                                 >
 
 

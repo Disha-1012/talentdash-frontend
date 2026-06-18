@@ -231,11 +231,12 @@ export default function FilterBar() {
 
             className="
 bg-white
+rounded-2xl
+shadow-sm
 border
-rounded-xl
-p-5
-mb-6
-space-y-5
+p-6
+mb-8
+space-y-6
 "
 
         >
@@ -254,10 +255,14 @@ space-y-5
                 placeholder="Search company..."
 
                 className="
-border
-p-3
-rounded-lg
 w-full
+rounded-xl
+border
+px-4
+py-3
+outline-none
+focus:ring-2
+focus:ring-blue-200
 "
 
             />
@@ -303,9 +308,12 @@ flex-wrap
 
                     className="
 border
-p-2
-rounded
-"
+rounded-xl
+px-4
+py-3
+bg-white
+hover:border-blue-500
+transition"
 
                 >
 
@@ -367,8 +375,12 @@ rounded
 
                     className="
 border
-p-2
-rounded
+rounded-xl
+px-4
+py-3
+bg-white
+hover:border-blue-500
+transition
 "
 
                 >
@@ -425,10 +437,12 @@ rounded
                     }}
 
                     className="
-border
-px-4
-py-2
-rounded
+rounded-xl
+px-5
+py-2.5
+bg-[#0369A1]
+text-white
+font-semibold
 "
 
                 >
@@ -454,10 +468,11 @@ rounded
                     }}
 
                     className="
+rounded-xl
+px-5
+py-2.5
 border
-px-4
-py-2
-rounded
+font-semibold
 "
 
                 >

@@ -3,94 +3,26 @@
 
 :root {
 
-  --background: #F7F7F7;
-  --foreground: #171717;
+  --background:#f8fafc;
+  --foreground:#0f172a;
 
 }
-
-
-@theme inline {
-
-  --color-background:
-    var(--background);
-
-  --color-foreground:
-    var(--foreground);
-
-  --font-sans:
-    var(--font-geist-sans);
-
-  --font-mono:
-    var(--font-geist-mono);
-
-}
-
-
-
-/*
-Remove automatic dark mode switching.
-
-Reason:
-Lighthouse measures first paint.
-System theme detection can cause extra style recalculation.
-*/
-
-
-html {
-
-  background:
-    var(--background);
-
-}
-
 
 
 body {
 
-  margin: 0;
-
-  background:
-    var(--background);
-
-  color:
-    var(--foreground);
-
-
-  /*
-  Next/font will inject the optimized font.
-  Fallbacks only.
-  */
-
+  background:#f8fafc;
+  color:#0f172a;
   font-family:
-    var(--font-geist-sans),
-    Arial,
-    Helvetica,
-    sans-serif;
-
-
-  /*
-  Improves text rendering
-  */
-
-  text-rendering:
-    optimizeSpeed;
-
-
-  -webkit-font-smoothing:
-    antialiased;
-
+  Arial,
+  Helvetica,
+  sans-serif;
 
 }
 
 
-
-/*
-Prevent layout jump from tables/cards
-*/
-
 * {
 
-  box-sizing:
-    border-box;
+ box-sizing:border-box;
 
 }
