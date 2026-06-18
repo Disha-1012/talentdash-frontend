@@ -11,34 +11,29 @@ import {
 
 
 
+
 export default function sitemap()
     : MetadataRoute.Sitemap {
 
 
     const baseUrl =
-        "http://localhost:3000";
+        "https://talentdash.com";
 
 
 
     const companyPages =
-        companies.map(company => (
+        companies.map(company => ({
 
 
-            {
+            url:
+                `${baseUrl}/companies/${company.slug}`,
 
 
-                url:
-                    `${baseUrl}/companies/${company.slug}`,
+            lastModified:
+                new Date()
 
 
-                lastModified:
-                    new Date()
-
-
-            }
-
-
-        ));
+        }));
 
 
 
@@ -49,44 +44,33 @@ export default function sitemap()
 
         {
 
-
             url:
                 baseUrl,
-
 
             lastModified:
                 new Date()
 
-
         },
 
 
-
         {
-
 
             url:
                 `${baseUrl}/salaries`,
 
-
             lastModified:
                 new Date()
-
 
         },
 
 
-
         {
-
 
             url:
                 `${baseUrl}/compare`,
 
-
             lastModified:
                 new Date()
-
 
         },
 

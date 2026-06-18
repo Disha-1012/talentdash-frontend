@@ -1,6 +1,18 @@
-import { SalaryRecord } from "@/types/salary";
-import Badge from "@/components/ui/Badge";
-import { formatCurrency } from "@/lib/format";
+import {
+    SalaryRecord
+}
+    from "@/types/salary";
+
+
+import Badge
+    from "@/components/ui/Badge";
+
+
+import {
+    formatCurrency
+}
+    from "@/lib/format";
+
 
 
 interface Props {
@@ -11,32 +23,38 @@ interface Props {
 
 
 
+
 export default function SalaryTable({
     data
 }: Props) {
 
 
-
     return (
 
-        <div className="
+        <div
+            className="
 overflow-x-auto
 bg-white
 rounded-xl
 border
 border-gray-200
-">
+"
+        >
 
 
-            <table className="
+            <table
+                className="
 w-full
 text-left
-">
+"
+            >
 
 
-                <thead className="
+                <thead
+                    className="
 bg-gray-50
-">
+"
+                >
 
                     <tr>
 
@@ -79,7 +97,6 @@ bg-gray-50
                             Total Comp
                         </th>
 
-
                     </tr>
 
                 </thead>
@@ -90,117 +107,104 @@ bg-gray-50
 
 
                     {
-                        data.map((item) => {
+                        data.map(item => (
 
 
-                            return (
-
-                                <tr
-                                    key={item.id}
-                                    className="
+                            <tr
+                                key={item.id}
+                                className="
 border-t
 hover:bg-gray-50
 "
-                                >
+                            >
 
 
-                                    <td className="p-4 font-semibold">
-
-                                        {item.company}
-
-                                    </td>
+                                <td className="p-4 font-semibold">
+                                    {item.company}
+                                </td>
 
 
-
-                                    <td className="p-4">
-
-                                        {item.role}
-
-                                    </td>
+                                <td className="p-4">
+                                    {item.role}
+                                </td>
 
 
-
-                                    <td className="p-4">
-
-                                        <Badge level={item.level} />
-
-                                    </td>
+                                <td className="p-4">
+                                    <Badge level={item.level} />
+                                </td>
 
 
+                                <td className="p-4">
+                                    {item.location}
+                                </td>
 
-                                    <td className="p-4">
 
-                                        {item.location}
-
-                                    </td>
+                                <td className="p-4">
+                                    {item.experience_years} yrs
+                                </td>
 
 
 
-                                    <td className="p-4">
+                                <td className="p-4">
 
-                                        {item.experience_years} yrs
+                                    {
+                                        item.base_salary
+                                            ?
+                                            formatCurrency(
+                                                item.base_salary,
+                                                item.currency
+                                            )
+                                            :
+                                            "—"
+                                    }
 
-                                    </td>
-
-
-
-
-                                    <td className="p-4">
-
-                                        {formatCurrency(
-                                            item.base_salary,
-                                            item.currency
-                                        )}
-
-                                    </td>
+                                </td>
 
 
 
-                                    <td className="p-4">
+                                <td className="p-4">
 
-                                        {
-                                            item.stock ?
-                                                formatCurrency(
-                                                    item.stock,
-                                                    item.currency
-                                                )
-                                                :
-                                                "—"
-                                        }
+                                    {
+                                        item.stock
+                                            ?
+                                            formatCurrency(
+                                                item.stock,
+                                                item.currency
+                                            )
+                                            :
+                                            "—"
+                                    }
 
-                                    </td>
+                                </td>
 
 
 
-                                    <td className="
+
+                                <td
+                                    className="
 p-4
 font-bold
 text-xl
 text-[#0369A1]
-">
+"
+                                >
 
 
-                                        {
-                                            formatCurrency(
-                                                item.total_compensation,
-                                                item.currency
-                                            )
-                                        }
+                                    {
+                                        formatCurrency(
+                                            item.total_compensation,
+                                            item.currency
+                                        )
+                                    }
 
 
-                                    </td>
+                                </td>
 
 
-
-                                </tr>
-
-
-                            )
+                            </tr>
 
 
-                        })
-
-
+                        ))
                     }
 
 

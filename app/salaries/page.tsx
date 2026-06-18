@@ -1,18 +1,51 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
 import SalaryPageClient
     from "@/components/features/SalaryPageClient";
 import FilterBar from "@/components/features/FilterBar";
-import { salaries } from "@/lib/mock-data";
+import {
+    cleanedSalaries
+}
+    from "@/lib/mock-data";
 import SortSelect
     from "@/components/features/SortSelect";
 
 export const metadata: Metadata = {
 
+
     title:
-        "Software Engineer Salaries | TalentDash",
+        "Software Engineer Salaries at Amazon India — L3 to L5 | TalentDash",
+
 
     description:
-        "Browse software engineer salary records by company, role, location and experience."
+        "Explore software engineer salaries, total compensation, levels and company-wise technology pay trends.",
+
+
+    alternates: {
+
+        canonical:
+            "https://talentdash.com/salaries"
+
+    },
+
+
+    openGraph: {
+
+
+        title:
+            "Software Engineer Salaries | TalentDash",
+
+
+        description:
+            "Compare technology salaries by company, role and level.",
+
+
+        url:
+            "https://talentdash.com/salaries"
+
+
+    }
+
 
 };
 
@@ -42,8 +75,8 @@ export default async function SalariesPage({
     const params = await searchParams;
 
 
-    let data = [...salaries];
-
+    let data =
+        [...cleanedSalaries];
     if (params.sort === "base") {
 
 
@@ -231,81 +264,93 @@ export default async function SalariesPage({
 
     return (
 
-        <main
-            className="
-            min-h-screen
-            bg-[#F7F7F7]
-            p-8
-            "
-        >
+        <>
+            <JsonLd />
 
-
-
-            <h1
+            <main
                 className="
-                text-4xl
-                font-bold
-                mb-6
-                "
+min-h-screen
+bg-[#F7F7F7]
+px-4
+py-6
+md:p-8
+"
             >
 
-                Software Engineer Salaries
-
-            </h1>
 
 
+                <div
+                    className="
+min-h-[52px]
+"
+                >
 
-            <FilterBar />
-            <SortSelect />
-
-
-
-            {
-                data.length > 0 ?
-
-                    <SalaryPageClient
-                        data={data}
-                    />
-
-
-                    :
-
-
-                    <div
+                    <h1
                         className="
+text-3xl
+md:text-4xl
+font-bold
+leading-tight
+"
+                    >
+                        Software Engineer Salaries
+                    </h1>
+
+                </div>
+                
+
+                <FilterBar />
+                <SortSelect />
+
+
+
+                {
+                    data.length > 0 ?
+
+                        <SalaryPageClient
+                            data={data}
+                        />
+
+
+                        :
+
+
+                        <div
+                            className="
                     bg-white
                     p-10
                     rounded-xl
                     text-center
                     "
-                    >
+                        >
 
-                        <h2
-                            className="
+                            <h2
+                                className="
                         text-xl
                         font-bold
                         "
-                        >
+                            >
 
-                            No records found
+                                No records found
 
-                        </h2>
-
-
-                        <p>
-
-                            Try removing filters.
-
-                        </p>
+                            </h2>
 
 
-                    </div>
+                            <p>
 
-            }
+                                Try removing filters.
+
+                            </p>
+
+
+                        </div>
+
+                }
 
 
 
-        </main>
+            </main>
+        </>
 
     );
 

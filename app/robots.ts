@@ -9,24 +9,30 @@ export default function robots()
     : MetadataRoute.Robots {
 
 
+    const baseUrl =
+        "https://talentdash.com";
+
+
+
     return {
 
 
         rules: {
 
 
-            userAgent: "*",
+            userAgent:
+                "*",
 
 
-            allow: "/"
+            allow:
+                "/"
 
 
         },
 
 
-
         sitemap:
-            "http://localhost:3000/sitemap.xml"
+            `${baseUrl}/sitemap.xml`
 
 
     };

@@ -1,30 +1,67 @@
-export function formatCurrency(
-    value: number,
-    currency: string
-) {
+import {
+    Currency
+}
+from "@/types/salary";
 
 
-    if (currency === "INR") {
+import {
+    CURRENCY_RATE
+}
+from "@/lib/config";
 
-        return new Intl.NumberFormat(
-            "en-IN",
-            {
-                style: "currency",
-                currency: "INR",
-                maximumFractionDigits: 0
-            }
-        ).format(value)
+
+
+export function convertCurrency(
+    amount:number,
+    currency:Currency
+){
+
+    if(currency === "USD"){
+
+        return (
+            amount *
+            CURRENCY_RATE.INR_TO_USD
+        );
 
     }
 
 
-    return new Intl.NumberFormat(
-        "en-US",
-        {
-            style: "currency",
-            currency
-        }
-    ).format(value)
+    return amount;
 
+}
+
+
+
+
+
+export function formatCurrency(
+    amount:number,
+    currency:Currency
+){
+
+    const converted =
+        convertCurrency(
+            amount,
+            currency
+        );
+
+
+    if(currency==="USD"){
+
+        return (
+            "$" +
+            Math.round(converted)
+                .toLocaleString("en-US")
+        );
+
+    }
+
+
+
+    return (
+        "₹" +
+        Math.round(converted)
+            .toLocaleString("en-IN")
+    );
 
 }

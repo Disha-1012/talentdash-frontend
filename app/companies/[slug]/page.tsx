@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import {
     notFound
@@ -10,12 +11,24 @@ import {
 
 
 import {
-    salaries
-} from "@/lib/mock-data";
+    cleanedSalaries
+}
+    from "@/lib/mock-data";
 
 
 import SalaryTable
     from "@/components/features/SalaryTable";
+
+import {
+    Level,
+    LEVELS
+}
+    from "@/types/salary";
+
+import {
+    formatCurrency
+}
+    from "@/lib/format";
 
 
 
@@ -76,8 +89,39 @@ export async function generateMetadata(
             `${company?.name} Salary Data | TalentDash`,
 
 
+
         description:
-            `Explore ${company?.name} compensation insights, salary records and engineering pay trends.`
+            `Explore ${company?.name} software engineer salaries, compensation trends and salary records.`,
+
+
+
+        alternates: {
+
+
+            canonical:
+                `https://talentdash.com/companies/${slug}`
+
+
+        },
+
+
+
+        openGraph: {
+
+
+            title:
+                `${company?.name} Salaries | TalentDash`,
+
+
+            description:
+                `View ${company?.name} salary insights and compensation data.`,
+
+
+            url:
+                `https://talentdash.com/companies/${slug}`
+
+
+        }
 
 
     };
@@ -117,16 +161,42 @@ function median(
 
 }
 
+function getRange(
+    values: number[]
+) {
+
+    if (values.length === 0) {
+        return {
+            min: 0,
+            max: 0
+        };
+    }
+
+
+    return {
+
+        min: Math.min(...values),
+
+        max: Math.max(...values)
+
+    };
+
+}
+
 
 
 // Calculate level distribution
 
 function getDistribution(
-    records: any[]
+    records: {
+        level: Level
+    }[]
 ) {
 
 
-    const result: any = {};
+    const result:
+        Record<Level, number> =
+        {} as Record<Level, number>;
 
 
 
@@ -187,31 +257,44 @@ export default async function CompanyPage({
 
 
 
-    const records = salaries.filter(
+    const records =
+        cleanedSalaries.filter(
 
-        item =>
+            item =>
 
-            item.company.toLowerCase()
+                item.company.toLowerCase()
 
-            ===
+                ===
 
-            company.name.toLowerCase()
+                company.name.toLowerCase()
 
-    );
-
-
+        );
 
 
-    const medianComp = median(
 
+
+    const compensationValues =
         records.map(
+            r => r.total_compensation
+        );
 
-            r =>
-                r.total_compensation
 
-        )
 
-    );
+    const medianComp =
+        records.length > 0
+            ?
+            median(
+                compensationValues
+            )
+            :
+            0;
+
+
+
+    const range =
+        getRange(
+            compensationValues
+        );
 
 
 
@@ -219,6 +302,11 @@ export default async function CompanyPage({
     const distribution = getDistribution(
         records
     );
+
+    const firstRecordId =
+        records.length > 0
+            ? records[0].id
+            : "";
 
 
 
@@ -257,6 +345,37 @@ export default async function CompanyPage({
 
             </h1>
 
+            <div
+                className="
+mt-6
+"
+            >
+
+
+                <Link
+
+                    href={`/compare?s1=${firstRecordId}`}
+
+                    className="
+    inline-block
+    mt-6
+    bg-blue-600
+    text-white
+    px-5
+    py-3
+    rounded-lg
+    font-semibold
+    "
+
+                >
+
+                    Compare {company.name}
+
+                </Link>
+
+
+            </div>
+
 
 
 
@@ -264,13 +383,13 @@ export default async function CompanyPage({
             <div
 
                 className="
-            bg-white
-            rounded-xl
-            p-6
-            grid
-            md:grid-cols-5
-            gap-5
-            "
+bg-white
+rounded-xl
+p-6
+grid
+md:grid-cols-6
+gap-5
+"
 
             >
 
@@ -362,7 +481,62 @@ export default async function CompanyPage({
                     <b className="text-xl">
 
                         ₹
-                        {medianComp.toLocaleString("en-IN")}
+                        {
+                            formatCurrency(
+                                medianComp,
+                                "INR"
+                            )
+                        }
+
+                    </b>
+
+
+                </div>
+
+                <div>
+
+                    <p className="text-gray-500">
+                        TC Range
+                    </p>
+
+
+                    <b>
+
+                        ₹
+                        {
+                            formatCurrency(
+                                range.min,
+                                "INR"
+                            )
+                        }
+
+                        -
+
+                        ₹
+                        {
+                            formatCurrency(
+                                range.max,
+                                "INR"
+                            )
+                        }
+
+                    </b>
+
+
+                </div>
+
+
+
+                <div>
+
+                    <p className="text-gray-500">
+                        Records
+                    </p>
+
+
+                    <b>
+
+                        {records.length}
 
                     </b>
 
@@ -417,101 +591,102 @@ export default async function CompanyPage({
 
 
                 {
-                    Object.entries(distribution)
-
-                        .map(([level, count]) => (
+                    LEVELS.map(level => (
 
 
-                            <div
+                        <div
 
-                                key={level}
+                            key={level}
 
-                                className="
-                        mb-4
-                        "
+                            className="mb-4"
 
-                            >
+                        >
 
 
-
-                                <div
-
-                                    className="
-                            flex
-                            justify-between
-                            "
-
-                                >
+                            <div className="flex justify-between">
 
 
-                                    <span>
+                                <span>
 
-                                        {level}
+                                    {level}
 
-                                    </span>
+                                </span>
 
 
 
-                                    <span>
+                                <span>
 
-                                        {String(count)}
+                                    {
+                                        distribution[level] || 0
+                                    }
 
-                                    </span>
-
-
-
-                                </div>
-
-
-
-
-
-                                <div
-
-                                    className="
-                            bg-gray-200
-                            h-3
-                            rounded
-                            "
-
-                                >
-
-
-
-                                    <div
-
-                                        className="
-                                bg-blue-600
-                                h-3
-                                rounded
-                                "
-
-                                        style={{
-
-                                            width:
-
-                                                `${Number(count)
-                                                /
-                                                records.length
-                                                *
-                                                100
-                                                }%`
-
-                                        }}
-
-
-                                    />
-
-
-
-                                </div>
+                                </span>
 
 
 
                             </div>
 
 
-                        ))
+
+
+
+                            <div
+                                className="
+bg-gray-200
+h-3
+rounded
+"
+
+                            >
+
+
+                                <div
+
+                                    className="
+bg-blue-600
+h-3
+rounded
+"
+
+                                    style={{
+
+                                        width:
+
+                                            records.length > 0
+
+                                                ?
+
+                                                `
+
+${(
+                                                    (distribution[level] || 0)
+                                                    / records.length
+                                                )
+                                                *
+                                                100
+                                                }%
+
+`
+
+                                                :
+
+                                                "0%"
+
+                                    }}
+
+
+                                />
+
+
+                            </div>
+
+
+
+                        </div>
+
+
+                    ))
+
                 }
 
 
@@ -524,31 +699,10 @@ export default async function CompanyPage({
 
 
 
+            <section className="mt-6">
 
 
-            {/* Salary Records */}
-
-
-
-            <section
-
-                className="
-            mt-6
-            "
-
-            >
-
-
-
-                <h2
-
-                    className="
-                text-2xl
-                font-bold
-                mb-4
-                "
-
-                >
+                <h2 className="text-2xl font-bold mb-4">
 
                     Salary Records
 
@@ -556,37 +710,28 @@ export default async function CompanyPage({
 
 
 
-
-
                 {
-                    records.length > 0 ?
 
-                        <SalaryTable
+                    records.length > 0
 
-                            data={records}
+                        ?
 
-                        />
+                        <SalaryTable data={records} />
+
 
                         :
 
-                        <div
-
-                            className="
-                    bg-white
-                    p-8
-                    rounded-xl
-                    "
-
-                        >
+                        <div className="
+bg-white
+p-8
+rounded-xl
+">
 
                             No salary records found.
 
                         </div>
 
                 }
-
-
-
 
 
             </section>

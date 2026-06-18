@@ -10,35 +10,28 @@ import {
 
 import {
     useState,
-    useEffect
+    useEffect,
+    useCallback
 }
     from "react";
 
 
+import {
+    LEVELS
+}
+    from "@/types/salary";
 
-const levels = [
 
-    "L3",
-    "L4",
-    "L5",
-    "L6",
-    "SDE-I",
-    "SDE-II",
-    "SDE-III",
-    "Staff",
-    "Principal"
-
-];
 
 
 
 export default function FilterBar() {
 
 
-
     const router = useRouter();
 
-    const searchParams = useSearchParams();
+    const searchParams =
+        useSearchParams();
 
 
 
@@ -62,20 +55,14 @@ export default function FilterBar() {
         );
 
 
-
-    const [currency, setCurrency] =
-        useState(
-            searchParams.get("currency") || ""
-        );
-
-
-
     const [level, setLevel] =
         useState<string[]>(
 
             searchParams.get("level")
                 ?
-                searchParams.get("level")!.split(",")
+                searchParams
+                    .get("level")!
+                    .split(",")
 
                 :
 
@@ -87,55 +74,69 @@ export default function FilterBar() {
 
 
 
-    function updateFilters(
-        newValues: any
-    ) {
+    const updateFilters = useCallback(
+
+        (
+            newValues: Record<string, string>
+        ) => {
 
 
-        const params =
-            new URLSearchParams(
-                searchParams.toString()
+            const params =
+                new URLSearchParams(
+                    searchParams.toString()
+                );
+
+
+
+            Object.entries(newValues)
+                .forEach(
+                    ([key, value]) => {
+
+
+                        if (value) {
+
+
+                            params.set(
+                                key,
+                                value
+                            );
+
+
+                        }
+
+                        else {
+
+
+                            params.delete(key);
+
+
+                        }
+
+
+                    }
+                );
+
+
+
+            router.push(
+                `/salaries?${params.toString()}`
             );
 
 
+        },
 
-        Object.entries(newValues)
-            .forEach(([key, value]) => {
+        [
+            router,
+            searchParams
+        ]
 
-
-                if (value) {
-
-                    params.set(
-                        key,
-                        String(value)
-                    );
-
-                }
-
-                else {
-
-                    params.delete(key);
-
-                }
-
-
-            });
-
-
-
-        router.push(
-            `/salaries?${params.toString()}`
-        );
-
-
-    }
+    );
 
 
 
 
 
 
-    // company debounce
 
     useEffect(() => {
 
@@ -159,7 +160,10 @@ export default function FilterBar() {
 
 
 
-    }, [company]);
+    }, [
+        company,
+        updateFilters
+    ]);
 
 
 
@@ -172,7 +176,7 @@ export default function FilterBar() {
     ) {
 
 
-        let updated;
+        let updated: string[];
 
 
 
@@ -186,7 +190,6 @@ export default function FilterBar() {
 
 
         }
-
         else {
 
 
@@ -212,6 +215,7 @@ export default function FilterBar() {
         });
 
 
+
     }
 
 
@@ -219,7 +223,9 @@ export default function FilterBar() {
 
 
 
+
     return (
+
 
         <div
 
@@ -235,12 +241,9 @@ space-y-5
         >
 
 
-
             <input
 
-
                 value={company}
-
 
                 onChange={
                     e => setCompany(
@@ -248,11 +251,7 @@ space-y-5
                     )
                 }
 
-
-
                 placeholder="Search company..."
-
-
 
                 className="
 border
@@ -268,13 +267,14 @@ w-full
 
 
             <div
+
                 className="
 flex
 gap-3
 flex-wrap
 "
-            >
 
+            >
 
 
 
@@ -342,15 +342,9 @@ rounded
 
 
 
-
-
-
                 <select
 
-
                     value={location}
-
-
 
                     onChange={
                         e => {
@@ -369,7 +363,6 @@ rounded
                         }
 
                     }
-
 
 
                     className="
@@ -419,15 +412,9 @@ rounded
 
 
 
-
                 <button
 
-
                     onClick={() => {
-
-
-                        setCurrency("INR");
-
 
                         updateFilters({
 
@@ -435,10 +422,7 @@ rounded
 
                         });
 
-
                     }}
-
-
 
                     className="
 border
@@ -447,16 +431,11 @@ py-2
 rounded
 "
 
-
                 >
-
 
                     ₹ INR
 
-
                 </button>
-
-
 
 
 
@@ -464,12 +443,7 @@ rounded
 
                 <button
 
-
                     onClick={() => {
-
-
-                        setCurrency("USD");
-
 
                         updateFilters({
 
@@ -477,10 +451,7 @@ rounded
 
                         });
 
-
                     }}
-
-
 
                     className="
 border
@@ -489,22 +460,15 @@ py-2
 rounded
 "
 
-
-
                 >
 
-
                     $ USD
-
 
                 </button>
 
 
 
-
             </div>
-
-
 
 
 
@@ -528,60 +492,60 @@ mb-2
 
 
                 <div
+
                     className="
 flex
 flex-wrap
 gap-3
 "
+
                 >
 
 
                     {
 
-                        levels.map(levelItem => (
+                        LEVELS.map(levelItem => (
 
 
                             <label
+
                                 key={levelItem}
+
                             >
 
 
                                 <input
 
-
                                     type="checkbox"
-
 
                                     checked={
                                         level.includes(levelItem)
                                     }
-
 
                                     onChange={() => changeLevel(levelItem)}
 
 
                                 />
 
-
                                 {" "}
+
                                 {levelItem}
 
 
                             </label>
 
 
-
                         ))
 
-
                     }
-
 
 
                 </div>
 
 
+
             </div>
+
 
 
 

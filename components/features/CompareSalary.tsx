@@ -1,46 +1,31 @@
 "use client";
 
 
-import { useState } from "react";
-
 import {
-    companies
+    useRouter,
+    useSearchParams
 }
-    from "@/lib/company-data";
+    from "next/navigation";
 
 
 import {
-    salaries
+    useEffect,
+    useState
+}
+    from "react";
+
+
+import {
+    cleanedSalaries
 }
     from "@/lib/mock-data";
 
 
-
-function median(
-    values: number[]
-) {
-
-
-    const sorted =
-        [
-            ...values
-
-        ]
-            .sort(
-                (a, b) => a - b
-            );
-
-
-
-    return sorted[
-        Math.floor(
-            sorted.length / 2
-        )
-
-    ];
-
-
+import {
+    formatCurrency
 }
+    from "@/lib/format";
+
 
 
 
@@ -50,128 +35,236 @@ export default function CompareSalary() {
 
 
 
-    const [company1, setCompany1]
-        =
-        useState(
-            companies[0].slug
-        );
+    const router = useRouter();
 
-
-
-    const [company2, setCompany2]
-        =
-        useState(
-            companies[1].slug
-        );
+    const params = useSearchParams();
 
 
 
 
-
-    const firstCompany =
-        companies.find(
-            c =>
-                c.slug === company1
-        );
+    const [a, setA] = useState(
+        params.get("s1") ||
+        cleanedSalaries[0].id
+    );
 
 
-
-    const secondCompany =
-        companies.find(
-            c =>
-                c.slug === company2
-        );
+    const [b, setB] = useState(
+        params.get("s2") ||
+        cleanedSalaries[1].id
+    );
 
 
 
 
 
-    const firstRecords =
-        salaries.filter(
+    useEffect(() => {
 
-            item =>
 
-                item.company
-                    .toLowerCase()
-                ===
+        const currentS1 =
+            params.get("s1");
 
-                firstCompany?.name
-                    .toLowerCase()
 
-        );
+        const currentS2 =
+            params.get("s2");
 
 
 
+        if (
+            currentS1 !== a ||
+            currentS2 !== b
+        ) {
+
+            router.replace(
+                `/compare?s1=${a}&s2=${b}`
+            );
+
+        }
 
 
-    const secondRecords =
-        salaries.filter(
-
-            item =>
-
-                item.company
-                    .toLowerCase()
-                ===
-
-                secondCompany?.name
-                    .toLowerCase()
-
-        );
-
-
-
-
-
-    const firstSalary =
-        median(
-
-            firstRecords.map(
-                r =>
-                    r.total_compensation
-            )
-
-        );
-
-
-
-
-    const secondSalary =
-        median(
-
-            secondRecords.map(
-                r =>
-                    r.total_compensation
-            )
-
-        );
+    }, [
+        a,
+        b,
+        router,
+        params
+    ]);
 
 
 
 
 
 
-    const difference =
-        Math.abs(
-            firstSalary - secondSalary
-        );
+
+    const first =
+        cleanedSalaries.find(
+            x => x.id === a
+        )!;
+
+
+
+    const second =
+        cleanedSalaries.find(
+            x => x.id === b
+        )!;
 
 
 
 
-    const percentage =
 
-        secondSalary !== 0 ?
 
-            (
-                difference /
-                secondSalary
-                *
-                100
-            ).toFixed(1)
 
-            :
+    function delta(
+        x: number,
+        y: number
+    ) {
 
-            0;
+        return x - y;
+
+    }
+
+
+
+
+
+
+    function renderDelta(
+        value: number
+    ) {
+
+
+        return (
+
+            <span
+
+                className={
+
+                    `
+                    font-semibold
+                    ${value >= 0
+                        ?
+                        "text-green-600"
+                        :
+                        "text-red-600"
+                    }
+                    `
+                }
+
+            >
+
+
+                {
+                    value >= 0
+                        ?
+                        "+"
+                        :
+                        ""
+                }
+
+
+                {
+                    formatCurrency(
+                        value,
+                        "INR"
+                    )
+                }
+
+
+            </span>
+
+        )
+
+    }
+
+
+
+
+
+
+    type ComparisonRow = {
+        label: string;
+        first: string | number;
+        second: string | number;
+        numeric: boolean;
+    };
+
+
+
+    const rows: ComparisonRow[] = [
+
+        {
+            label: "Company",
+            first: first.company,
+            second: second.company,
+            numeric: false
+        },
+
+
+        {
+            label: "Role",
+            first: first.role,
+            second: second.role,
+            numeric: false
+        },
+
+
+        {
+            label: "Level",
+            first: first.level,
+            second: second.level,
+            numeric: false
+        },
+
+
+        {
+            label: "Location",
+            first: first.location,
+            second: second.location,
+            numeric: false
+        },
+
+
+        {
+            label: "Experience",
+            first: `${first.experience_years} yrs`,
+            second: `${second.experience_years} yrs`,
+            numeric: false
+        },
+
+
+        {
+            label: "Base",
+            first: first.base_salary,
+            second: second.base_salary,
+            numeric: true
+        },
+
+
+        {
+            label: "Bonus",
+            first: first.bonus ?? 0,
+            second: second.bonus ?? 0,
+            numeric: true
+        },
+
+
+        {
+            label: "Stock",
+            first: first.stock ?? 0,
+            second: second.stock ?? 0,
+            numeric: true
+        },
+
+
+        {
+            label: "Total Comp",
+            first: first.total_compensation,
+            second: second.total_compensation,
+            numeric: true
+        }
+
+    ];
+
+
+
 
 
 
@@ -182,10 +275,14 @@ export default function CompareSalary() {
         <div
 
             className="
-bg-white
-rounded-xl
-p-8
-"
+            bg-white
+            rounded-2xl
+            shadow-sm
+            border
+            border-gray-200
+            p-6
+            md:p-8
+            "
 
         >
 
@@ -193,109 +290,171 @@ p-8
 
 
 
+            {/* Selectors */}
+
+
             <div
 
                 className="
-grid
-md:grid-cols-2
-gap-5
-mb-8
-"
+                grid
+                md:grid-cols-2
+                gap-5
+                mb-8
+                "
 
             >
 
 
 
-                <select
-
-                    className="
-border
-p-3
-rounded-lg
-"
-
-                    value={company1}
-
-                    onChange={
-                        e =>
-                            setCompany1(
-                                e.target.value
-                            )
-                    }
-
-                >
+                <div>
 
 
-                    {
-                        companies.map(c => (
+                    <label
+                        className="
+                        block
+                        text-sm
+                        font-semibold
+                        mb-2
+                        "
+                    >
 
-                            <option
+                        Compare Record A
 
-                                key={c.slug}
-
-                                value={c.slug}
-
-                            >
-
-                                {c.name}
-
-                            </option>
-
-                        ))
-                    }
-
-
-                </select>
+                    </label>
 
 
 
+                    <select
+
+
+                        value={a}
+
+
+                        onChange={
+                            e =>
+                                setA(
+                                    e.target.value
+                                )
+                        }
+
+
+                        className="
+                        w-full
+                        border
+                        rounded-xl
+                        p-3
+                        focus:outline-none
+                        "
+
+                    >
+
+
+                        {
+                            cleanedSalaries.map(r => (
+
+
+                                <option
+
+                                    key={r.id}
+
+                                    value={r.id}
+
+                                >
+
+                                    {r.company} -
+                                    {r.role} -
+                                    {r.level}
+
+
+                                </option>
+
+
+                            ))
+                        }
+
+
+                    </select>
+
+
+                </div>
 
 
 
 
-                <select
-
-                    className="
-border
-p-3
-rounded-lg
-"
-
-                    value={company2}
-
-                    onChange={
-                        e =>
-                            setCompany2(
-                                e.target.value
-                            )
-                    }
-
-                >
-
-
-                    {
-                        companies.map(c => (
-
-                            <option
-
-                                key={c.slug}
-
-                                value={c.slug}
-
-                            >
-
-                                {c.name}
-
-                            </option>
-
-                        ))
-                    }
-
-
-                </select>
 
 
 
+                <div>
+
+
+                    <label
+                        className="
+                        block
+                        text-sm
+                        font-semibold
+                        mb-2
+                        "
+                    >
+
+                        Compare Record B
+
+                    </label>
+
+
+
+                    <select
+
+
+                        value={b}
+
+
+                        onChange={
+                            e =>
+                                setB(
+                                    e.target.value
+                                )
+                        }
+
+
+                        className="
+                        w-full
+                        border
+                        rounded-xl
+                        p-3
+                        focus:outline-none
+                        "
+
+                    >
+
+
+                        {
+                            cleanedSalaries.map(r => (
+
+
+                                <option
+
+                                    key={r.id}
+
+                                    value={r.id}
+
+                                >
+
+                                    {r.company} -
+                                    {r.role} -
+                                    {r.level}
+
+
+                                </option>
+
+
+                            ))
+                        }
+
+
+                    </select>
+
+
+                </div>
 
 
 
@@ -308,161 +467,264 @@ rounded-lg
 
 
 
+
+            {/* Comparison Table */}
+
+
+
             <div
 
                 className="
-grid
-md:grid-cols-3
-gap-5
-"
+                overflow-x-auto
+                "
 
             >
 
 
 
-
-
-
-                <div
+                <table
 
                     className="
-border
-rounded-xl
-p-5
-"
+                w-full
+                text-left
+                "
 
                 >
 
 
-                    <p>
-                        {firstCompany?.name}
-                    </p>
 
-
-                    <h2
+                    <thead
 
                         className="
-text-3xl
-font-bold
-"
+                bg-gray-50
+                "
 
                     >
 
-                        ₹
-                        {firstSalary.toLocaleString("en-IN")}
 
-                    </h2>
+                        <tr>
 
 
-                    <p>
-                        Median Compensation
-                    </p>
+                            <th className="p-4">
+                                Field
+                            </th>
 
 
-                </div>
+                            <th className="p-4">
+                                Record A
+                            </th>
 
 
+                            <th className="p-4">
+                                Record B
+                            </th>
 
 
+                            <th className="p-4">
+                                Delta
+                            </th>
 
 
-
-                <div
-
-                    className="
-border
-rounded-xl
-p-5
-"
-
-                >
+                        </tr>
 
 
-                    <p>
-                        {secondCompany?.name}
-                    </p>
-
-
-                    <h2
-
-                        className="
-text-3xl
-font-bold
-"
-
-                    >
-
-                        ₹
-                        {secondSalary.toLocaleString("en-IN")}
-
-                    </h2>
-
-
-                    <p>
-                        Median Compensation
-                    </p>
-
-
-                </div>
+                    </thead>
 
 
 
 
 
+                    <tbody>
 
 
-                <div
+                        {
+                            rows.map(
+                                row => (
 
-                    className="
-border
-rounded-xl
-p-5
-"
+                                    <tr
 
-                >
+                                        key={row.label}
 
+                                        className="
+            border-t
+            "
 
-                    <p>
-                        Difference
-                    </p>
-
+                                    >
 
 
-                    <h2
+                                        <td
+                                            className="
+                p-4
+                font-semibold
+                "
+                                        >
 
-                        className="
-text-3xl
-font-bold
-text-blue-700
-"
+                                            {row.label}
 
-                    >
-
-                        ₹
-                        {difference.toLocaleString("en-IN")}
-
-                    </h2>
+                                        </td>
 
 
 
-                    <p>
-
-                        {percentage}% difference
-
-                    </p>
+                                        <td className="p-4">
 
 
+                                            {
+                                                row.numeric
+                                                    ?
+                                                    formatCurrency(
+                                                        Number(row.first),
+                                                        "INR"
+                                                    )
+                                                    :
+                                                    row.first
+                                            }
 
-                </div>
+
+                                        </td>
 
 
 
 
+                                        <td className="p-4">
+
+
+                                            {
+                                                row.numeric
+                                                    ?
+                                                    formatCurrency(
+                                                        Number(row.second),
+                                                        "INR"
+                                                    )
+                                                    :
+                                                    row.second
+                                            }
+
+
+                                        </td>
+
+
+
+
+                                        <td className="p-4">
+
+
+                                            {
+
+                                                row.numeric
+                                                    ?
+
+                                                    renderDelta(
+                                                        delta(
+                                                            Number(row.first),
+                                                            Number(row.second)
+                                                        )
+                                                    )
+
+                                                    :
+
+                                                    "—"
+
+                                            }
+                                        </td>
+
+
+
+                                    </tr>
+
+
+                                ))
+                        }
+
+
+
+                    </tbody>
+
+
+
+                </table>
 
 
             </div>
 
 
+
+
+
+
+
+
+
+            {/* Winner */}
+
+
+            <div
+
+                className="
+                mt-8
+                flex
+                justify-center
+                "
+
+            >
+
+
+                {
+
+                    first.total_compensation >=
+                        second.total_compensation
+
+                        ?
+
+
+                        <div
+
+                            className="
+                    bg-[#0369A1]
+                    text-white
+                    px-5
+                    py-2
+                    rounded-full
+                    font-semibold
+                    "
+
+                        >
+
+                            {first.company}
+                            {" "}
+                            Higher TC
+
+
+                        </div>
+
+
+                        :
+
+
+                        <div
+
+                            className="
+                    bg-[#0369A1]
+                    text-white
+                    px-5
+                    py-2
+                    rounded-full
+                    font-semibold
+                    "
+
+                        >
+
+                            {second.company}
+                            {" "}
+                            Higher TC
+
+
+                        </div>
+
+
+                }
+
+
+            </div>
 
 
 

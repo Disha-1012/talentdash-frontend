@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import JsonLd
-from "@/components/seo/JsonLd";
+  from "@/components/seo/JsonLd";
 
 import {
   Geist,
@@ -13,7 +13,6 @@ import "./globals.css";
 
 import Navbar
   from "@/components/ui/Navbar";
-
 
 
 const geistSans = Geist({

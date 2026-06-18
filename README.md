@@ -25,11 +25,12 @@ https://github.com/Disha-1012/talentdash-frontend
 # Tech Stack
 
 - Next.js 16 (App Router)
-- TypeScript
-- React
+- React Server Components
+- TypeScript (Strict Mode)
 - Tailwind CSS
-- JavaScript
+- ESLint
 - Vercel Deployment
+- Mock JSON Seed Data
 
 ---
 
@@ -45,41 +46,71 @@ https://github.com/Disha-1012/talentdash-frontend
 
 - Salary records table
 - 60+ mock salary records
-- Company search
+- Company search with URL state
 - Role filtering
 - Location filtering
-- Level filtering
-- Currency filtering
-- URL-based filter state management
-- Sorting functionality:
+- Level multi-select filtering
+- Currency toggle (INR/USD)
+- Shareable URL filters
+
+Example:
+
+/salaries?company=amazon&level=L4&location=Bengaluru
+
+- Sorting:
   - Total Compensation
   - Base Salary
   - Experience
   - Recently Added
-- Pagination
+
+- Pagination (25 records/page)
 - Empty state handling
+- Level badge system:
+  - L3 / SDE-I
+  - L4 / SDE-II
+  - L5 / SDE-III
+  - L6 / Staff
+  - Principal
+
+- Missing bonus/stock handled as "—"
+- Salary records validated against schema
 
 
 ---
 
 ## 2. Company Profile Pages
 
-### Route:
-
-`/companies/[slug]`
-
 ### Features:
 
 - Dynamic company profile pages
-- Static generation using `generateStaticParams()`
-- Company information display:
+
+Route:
+
+/companies/[slug]
+
+
+- Static generation using generateStaticParams()
+
+- Company header:
   - Industry
   - Founded year
-  - Employee count
+  - Headcount
   - Headquarters
-- Median compensation calculation
-- Level distribution visualization
-- Company-specific salary records
+
+- Compensation overview:
+  - Median Total Compensation
+  - Minimum compensation
+  - Maximum compensation
+  - Record count
+
+- Dynamic level distribution bar
+
+- Company filtered salary table
+
+- Compare button:
+/compare?s1={id}
+
+- Invalid slug returns 404
 
 
 ---
@@ -92,10 +123,45 @@ https://github.com/Disha-1012/talentdash-frontend
 
 ### Features:
 
-- Two company selectors
-- Median compensation comparison
-- Compensation difference calculation
-- Percentage difference calculation
+- Salary record comparison
+
+Route:
+
+/compare
+
+
+- Two salary record selectors
+
+- URL state:
+
+/compare?s1={id}&s2={id}
+
+
+- Shareable comparison URL
+
+- Side-by-side comparison:
+
+  - Company
+  - Role
+  - Level
+  - Location
+  - Experience
+  - Base
+  - Bonus
+  - Stock
+  - Total Compensation
+
+
+- Delta calculation:
+
+Positive:
+Record A pays higher
+
+Negative:
+Record B pays higher
+
+
+- Higher TC winner badge
 
 
 ---
@@ -155,6 +221,24 @@ talentdash-frontend/
 
 ---
 
+# SEO Implementation
+
+Implemented:
+
+- Page metadata
+- Canonical URLs
+- Open Graph metadata
+- JSON-LD structured data
+- sitemap.xml
+- robots.txt
+
+
+Structured data:
+
+Schema.org Dataset
+
+Used for salary dataset indexing.
+
 # Getting Started
 
 ## Prerequisites
@@ -166,6 +250,23 @@ Make sure you have installed:
 
 
 ---
+
+# Performance
+
+Optimizations:
+
+- Salary table remains Server Component
+- Client JS minimized
+- Interactive components isolated
+- No unnecessary layout shift
+- Loading states added
+- Lighthouse tested
+
+
+Targets:
+
+LCP < 2 seconds
+CLS < 0.1
 
 # Installation
 

@@ -9,19 +9,41 @@ export default function JsonLd() {
 
 
         "@type":
-            "WebSite",
+            "Dataset",
 
 
         name:
-            "TalentDash",
+            "Software Engineer Salary Dataset",
 
 
         description:
-            "Software engineer salary intelligence platform",
+            "Technology salary compensation data including company, role, location, level and total compensation.",
 
 
         url:
-            "http://localhost:3000"
+            "https://talentdash.com/salaries",
+
+
+        creator: {
+
+            "@type":
+                "Organization",
+
+            name:
+                "TalentDash"
+
+        },
+
+
+        distribution: {
+
+            "@type":
+                "DataDownload",
+
+            encodingFormat:
+                "application/json"
+
+        }
 
 
     };

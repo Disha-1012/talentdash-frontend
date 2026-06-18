@@ -1,21 +1,52 @@
 import type { Metadata } from "next";
+
+import {
+    Suspense
+}
+    from "react";
+
+
 import CompareSalary
     from "@/components/features/CompareSalary";
 
 
-export const metadata: Metadata = {
 
+export const metadata: Metadata = {
 
     title:
         "Compare Tech Salaries | TalentDash",
 
 
-
     description:
-        "Compare software engineer compensation between technology companies."
+        "Compare software engineer compensation between technology companies.",
 
+
+    alternates: {
+
+        canonical:
+            "https://talentdash.com/compare"
+
+    },
+
+
+    openGraph: {
+
+        title:
+            "Compare Tech Salaries | TalentDash",
+
+
+        description:
+            "Compare software engineer compensation between technology companies.",
+
+
+        url:
+            "https://talentdash.com/compare"
+
+    }
 
 };
+
+
 
 
 
@@ -35,6 +66,7 @@ p-8
         >
 
 
+
             <h1
 
                 className="
@@ -51,12 +83,39 @@ mb-8
 
 
 
-            <CompareSalary />
+
+
+            <Suspense
+
+                fallback={
+
+                    <div
+
+                        className="
+bg-white
+rounded-xl
+p-8
+"
+
+                    >
+
+                        Loading comparison...
+
+                    </div>
+
+                }
+
+            >
+
+                <CompareSalary />
+
+            </Suspense>
+
 
 
         </main>
 
-    )
+    );
 
 
 }

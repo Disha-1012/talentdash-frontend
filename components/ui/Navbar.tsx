@@ -24,7 +24,7 @@ border-b
             </Link>
 
 
-            <Link href="/companies/amazon">
+            <Link href="/companies">
                 Companies
             </Link>
 
