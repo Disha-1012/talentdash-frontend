@@ -1,80 +1,46 @@
 import { Level } from "@/types/salary";
 
-
 interface BadgeProps {
     level: Level;
 }
 
-
 const levelColors: Record<Level, string> = {
+    L3: "bg-[#F1F5F9] text-[#475569] border border-[#CBD5E1]",
 
+    "SDE-I": "bg-[#F1F5F9] text-[#475569] border border-[#CBD5E1]",
 
-    "L3":
-        "bg-slate-100 text-slate-700 border border-slate-300",
+    L4: "bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD]",
 
+    "SDE-II": "bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD]",
 
-    "SDE-I":
-        "bg-slate-100 text-slate-700 border border-slate-300",
+    L5: "bg-[#E0E7FF] text-[#4338CA] border border-[#C7D2FE]",
 
+    "SDE-III": "bg-[#E0E7FF] text-[#4338CA] border border-[#C7D2FE]",
 
+    L6: "bg-[#F3E8FF] text-[#7E22CE] border border-[#E9D5FF]",
 
-    "L4":
-        "bg-blue-100 text-blue-700 border border-blue-300",
+    Staff: "bg-[#F3E8FF] text-[#7E22CE] border border-[#E9D5FF]",
 
-
-    "SDE-II":
-        "bg-blue-100 text-blue-700 border border-blue-300",
-
-
-
-    "L5":
-        "bg-indigo-100 text-indigo-700 border border-indigo-300",
-
-
-    "SDE-III":
-        "bg-indigo-100 text-indigo-700 border border-indigo-300",
-
-
-
-    "L6":
-        "bg-purple-100 text-purple-700 border border-purple-300",
-
-
-    "Staff":
-        "bg-purple-100 text-purple-700 border border-purple-300",
-
-
-
-    "Principal":
-        "bg-[#172554] text-white"
-
+    Principal: "bg-[#172554] text-white border border-[#172554]",
 };
 
-
-export default function Badge({
-    level
-}: BadgeProps) {
-
-
+export default function Badge({ level }: BadgeProps) {
     return (
-
         <span
             className={`
 px-3
 py-1
 rounded-full
-text-xs
+text-[12px]
 font-semibold
+tracking-wide
 inline-flex
 items-center
+whitespace-nowrap
 ${levelColors[level]}
 `}
         >
-
             {level}
-
         </span>
-
-    )
-
+    );
 }

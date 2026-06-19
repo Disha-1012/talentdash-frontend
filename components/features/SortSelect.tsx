@@ -1,143 +1,57 @@
 "use client";
 
-
-import {
-    useRouter,
-    useSearchParams
-}
-    from "next/navigation";
-
-
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SortSelect() {
-
-
     const router = useRouter();
-
     const searchParams = useSearchParams();
 
+    function changeSort(e: React.ChangeEvent<HTMLSelectElement>) {
+        const value = e.target.value;
 
-
-    function changeSort(
-        e: React.ChangeEvent<HTMLSelectElement>
-    ) {
-
-
-        const value =
-            e.target.value;
-
-
-
-        const params =
-            new URLSearchParams(
-                searchParams.toString()
-            );
-
-
+        const params = new URLSearchParams(searchParams.toString());
 
         if (value) {
-
-            params.set(
-                "sort",
-                value
-            );
-
-        }
-        else {
-
-            params.delete(
-                "sort"
-            );
-
+            params.set("sort", value);
+        } else {
+            params.delete("sort");
         }
 
-
-
-
-        router.push(
-            `/salaries?${params.toString()}`
-        );
-
-
+        router.push(`/salaries?${params.toString()}`);
     }
 
-
-
-
-
     return (
-
-
         <select
-
-
-            defaultValue={
-                searchParams.get("sort") || ""
-            }
-
-
+            defaultValue={searchParams.get("sort") || ""}
             onChange={changeSort}
-
-
             className="
             border
-            rounded
-            p-2
+            border-[#EBEBEB]
+            rounded-lg
+            px-4
+            py-3
+            text-[14px]
+            font-medium
+            text-[#222222]
             bg-white
+            outline-none
+            cursor-pointer
+            hover:border-[#FF5A5F]
+            focus:ring-2
+            focus:ring-[#FF5A5F]/30
+            focus:border-[#FF5A5F]
+            transition
             "
-
-
         >
+            <option value="">Sort By</option>
 
+            <option value="total">Total Compensation</option>
 
+            <option value="base">Base Salary</option>
 
-            <option value="">
+            <option value="experience">Experience</option>
 
-                Sort By
-
-            </option>
-
-
-
-            <option value="total">
-
-                Total Compensation
-
-            </option>
-
-
-
-
-            <option value="base">
-
-                Base Salary
-
-            </option>
-
-
-
-
-            <option value="experience">
-
-                Experience
-
-            </option>
-
-
-
-
-            <option value="recent">
-
-                Recently Added
-
-            </option>
-
-
-
+            <option value="recent">Recently Added</option>
         </select>
-
-
     );
-
-
 }
